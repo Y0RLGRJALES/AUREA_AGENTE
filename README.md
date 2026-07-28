@@ -166,7 +166,7 @@ El agente responde únicamente utilizando la información contenida en los docum
 
 Agregar aquí una captura del notebook funcionando.
 
-Agregar aquí una captura del despliegue en OCI.
+Agregar aquí una captura del despliegue 
 
 ---
 
