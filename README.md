@@ -1,74 +1,83 @@
-# AUREA - Agente Inteligente para Consulta de Documentos
+# 💄 AUREA - Agente Inteligente para Consulta de Documentos
 
 ## Descripción
 
-AUREA es un asistente virtual basado en la arquitectura Retrieval-Augmented Generation (RAG), diseñado para responder preguntas utilizando exclusivamente la información contenida en documentos PDF de una tienda de cosméticos.
+AUREA es un asistente virtual desarrollado mediante la arquitectura **Retrieval-Augmented Generation (RAG)**, diseñado para responder preguntas utilizando exclusivamente la información contenida en documentos PDF de una tienda de cosméticos.
 
-El sistema recupera los fragmentos más relevantes mediante búsqueda semántica y genera respuestas utilizando el modelo Llama 3.3 70B Versatile a través de la API de Groq.
-
----
-
-# Arquitectura
-
-Usuario
-
-↓
-
-Pregunta
-
-↓
-
-Retriever (ChromaDB)
-
-↓
-
-Embeddings (Sentence Transformers)
-
-↓
-
-Fragmentos relevantes
-
-↓
-
-LLM (Llama 3.3 70B - Groq)
-
-↓
-
-Respuesta
+El sistema recupera los fragmentos más relevantes mediante búsqueda semántica y genera respuestas utilizando el modelo **Llama 3.3 70B Versatile**, accedido a través de la API de **Groq**.
 
 ---
 
-# Tecnologías
+# Arquitectura del sistema
 
-- Python
-- Google Colab
+```
+                Usuario
+                    │
+                    ▼
+             Pregunta en Streamlit
+                    │
+                    ▼
+          Recuperación de documentos
+               (Retriever MMR)
+                    │
+                    ▼
+        ChromaDB + Sentence Transformers
+                    │
+                    ▼
+         Fragmentos más relevantes
+                    │
+                    ▼
+        Modelo Llama 3.3 70B (Groq)
+                    │
+                    ▼
+               Respuesta final
+```
+
+---
+
+# Tecnologías utilizadas
+
+- Python 3.11+
+- Streamlit
 - LangChain
 - ChromaDB
 - Sentence Transformers
 - Groq API
-- Llama 3.3 70B
+- Llama 3.3 70B Versatile
 - PyPDF
 
 ---
 
-# Flujo del proyecto
+# Estructura del proyecto
 
-1. Cargar documentos PDF.
-2. Dividir el contenido en fragmentos.
-3. Generar embeddings.
-4. Crear la base vectorial con ChromaDB.
-5. Recuperar los fragmentos más relevantes.
-6. Construir el contexto.
-7. Enviar el contexto al modelo LLM.
-8. Generar una respuesta basada únicamente en la información recuperada.
+```
+AUREA_AGENTE/
+│
+├── app.py
+├── rag.py
+├── requirements.txt
+├── README.md
+├── LICENSE
+├── .gitignore
+├── documentos/
+│     ├── catalogo.pdf
+│     └── promociones.pdf
+└── AUREA_AGENT.ipynb
+```
 
 ---
 
 # Instalación
 
+Clonar el repositorio
+
 ```bash
 git clone https://github.com/Y0RLGRJALES/AUREA_AGENTE.git
+```
 
+Entrar al proyecto
+
+```bash
 cd AUREA_AGENTE
 ```
 
@@ -78,100 +87,108 @@ Instalar dependencias
 pip install -r requirements.txt
 ```
 
+Ejecutar la aplicación
+
+```bash
+streamlit run app.py
+```
+
 ---
 
 # Configuración
 
-Crear una API Key en Groq.
-
-Guardar la variable:
+Antes de ejecutar la aplicación debes configurar la variable:
 
 ```
 GROQ_API_KEY
 ```
 
-En Google Colab puede almacenarse utilizando Secrets.
-
----
-
-# Ejemplo de uso
-
-```python
-preguntar_aurea("¿Tienen envío gratis?")
-```
-
-Respuesta esperada
+En Streamlit Community Cloud se configura desde:
 
 ```
-Sí. La tienda ofrece envío gratuito para compras superiores al valor indicado en el documento oficial.
+Settings
+→ Secrets
 ```
 
-Otro ejemplo
+Ejemplo:
 
-```python
-preguntar_aurea("¿Aceptan PSE?")
+```toml
+GROQ_API_KEY="TU_API_KEY"
 ```
 
 ---
 
-# Arquitectura RAG
+# Funcionamiento
 
-```
-PDFs
-      │
-      ▼
-Carga de documentos
-      │
-      ▼
-Chunking
-      │
-      ▼
-Embeddings
-      │
-      ▼
-ChromaDB
-      │
-      ▼
-Retriever
-      │
-      ▼
-Contexto
-      │
-      ▼
-Groq
-      │
-      ▼
-Respuesta
-```
+El sistema realiza el siguiente flujo:
+
+1. Carga todos los documentos PDF.
+2. Divide los documentos en fragmentos (chunks).
+3. Genera embeddings utilizando Sentence Transformers.
+4. Construye una base vectorial con ChromaDB.
+5. Recupera los fragmentos más relevantes mediante búsqueda MMR.
+6. Envía únicamente esos fragmentos al modelo Llama 3.3.
+7. Genera una respuesta basada exclusivamente en el contexto recuperado.
 
 ---
 
-# Ejemplos de preguntas
+# Ejemplos de consultas
 
+- ¿Tienen envío gratis?
 - ¿Aceptan PSE?
-- ¿Hay envío gratis?
-- ¿Cuánto tarda el despacho?
-- ¿Qué productos están disponibles?
+- ¿Qué promociones tienen disponibles?
 - ¿Cuáles son las políticas de devolución?
+- ¿Qué productos manejan?
 
 ---
 
-# Resultados
+# Ejemplo de respuesta
 
-El agente responde únicamente utilizando la información contenida en los documentos cargados, evitando generar respuestas inventadas (hallucinations).
+**Pregunta**
+
+```
+¿Aceptan PSE?
+```
+
+**Respuesta**
+
+```
+Sí. Según la información encontrada en los documentos oficiales...
+```
+
+**Fuentes**
+
+- catalogo.pdf
 
 ---
 
-# Capturas
+# Despliegue
 
-Agregar aquí una captura del notebook funcionando.
+La aplicación fue desplegada mediante **Streamlit Community Cloud**.
 
-Agregar aquí una captura del despliegue 
+Enlace:
+
+```
+(Pegar aquí el enlace de Streamlit cuando realices el deploy)
+```
+
+---
+
+# Capturas de pantalla
+
+Agregar las siguientes imágenes:
+
+- Aplicación ejecutándose localmente.
+- Aplicación desplegada en Streamlit.
+- Respuesta generada por el agente.
 
 ---
 
 # Autor
 
-Yorlandi Grajales
+**Yorlandi Grajales**
 
-Proyecto académico - Arquitectura RAG con LangChain, ChromaDB y Groq.
+Proyecto académico sobre arquitecturas **Retrieval-Augmented Generation (RAG)** utilizando LangChain, ChromaDB y Groq.
+
+---
+
