@@ -169,7 +169,7 @@ La aplicación fue desplegada mediante **Streamlit Community Cloud**.
 Enlace:
 
 ```
-(Pegar aquí el enlace de Streamlit cuando realices el deploy)
+[(Pegar aquí el enlace de Streamlit cuando realices el deploy)](https://aureaagente-z6vhhqbs9nstwfyogh8nw5.streamlit.app/)
 ```
 
 ---
@@ -178,9 +178,21 @@ Enlace:
 
 Agregar las siguientes imágenes:
 
-- Aplicación ejecutándose localmente.
+- Aplicación ejecutándose
+
+  ![Codigo funcionando en colab](img/COLAB.png)
+  ![Codigo funcionando en colab](img/COLAB2.png)
+
+
 - Aplicación desplegada en Streamlit.
+ ![Deploy en Streamlit](img/DEPLOY1.png)
+ 
+
 - Respuesta generada por el agente.
+ ![Deploy en Streamlit](img/DEPLOY2.png)
+ ![Deploy en Streamlit](img/DEPLOY3.png)
+ ![Deploy en Streamlit](img/DEPLOY4.png)
+ ![Deploy en Streamlit](img/DEPLOY5.png)
 
 ---
 
